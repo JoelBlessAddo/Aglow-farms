@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:aglow_farms/utils/feed.dart';
+import 'package:aglow_farms/utils/feed_data.dart';
 import 'package:flutter/material.dart';
 import 'package:aglow_farms/features/home/view/widgets/carousel.dart';
 import 'package:aglow_farms/features/home/view/widgets/feed_card.dart';

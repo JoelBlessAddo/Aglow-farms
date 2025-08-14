@@ -1,7 +1,7 @@
 import 'package:aglow_farms/features/cart/view/widgets/cart_details.dart';
 import 'package:aglow_farms/features/home/view/home_page.dart';
 import 'package:aglow_farms/features/profile/view/profile_page.dart';
-import 'package:aglow_farms/features/services/view/widgets/services_page.dart';
+import 'package:aglow_farms/features/services/view/widgets/alert_page.dart';
 import 'package:aglow_farms/features/support/support.dart';
 import 'package:aglow_farms/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   final pages = [
     const HomePage(),
-    const Servicespage(),
+    const AlertPage(),
     const CartPage(),
     const ProfilePage(),
     const Support(),
