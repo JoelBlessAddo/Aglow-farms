@@ -11,7 +11,13 @@ class AlertsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: WHITE,
-      appBar: AppBar(title: const Text("Alerts")),
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        title: const Text(
+          "Alerts",
+          style: TextStyle(fontWeight: FontWeight.w400),
+        ),
+      ),
       body: ListView.builder(
         itemCount: alerts.length,
         itemBuilder: (context, index) {

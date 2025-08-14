@@ -41,9 +41,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
-      leading: CircleAvatar(
-        radius: 20,
-        backgroundImage: const AssetImage('assets/logo.png'),
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: CircleAvatar(
+          radius: 20,
+          backgroundImage: const AssetImage('assets/logo.png'),
+        ),
       ),
     );
   }
