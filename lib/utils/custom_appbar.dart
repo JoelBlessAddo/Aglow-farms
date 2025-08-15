@@ -1,4 +1,6 @@
+import 'package:aglow_farms/features/profile/view/profile_page.dart';
 import 'package:aglow_farms/utils/colors.dart';
+import 'package:aglow_farms/utils/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
@@ -35,7 +37,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               IconButton.filledTonal(
                 icon: Icon(IconlyBroken.profile, size: 28),
-                onPressed: () {},
+                onPressed: () {
+                  customNavigator(context, ProfileManagementPage());
+                },
               ),
             ],
           ),

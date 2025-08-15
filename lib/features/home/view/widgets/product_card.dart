@@ -6,123 +6,169 @@ import 'package:aglow_farms/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatefulWidget {
-  final Product product; // store product here
-
   const ProductCard({super.key, required this.product});
+  final Product product;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
 }
 
 class _ProductCardState extends State<ProductCard> {
-  bool isFavorite = false;
+  String _formatPrice(num p) {
+    // Show whole number without .0, else 2 dp
+    return p % 1 == 0 ? p.toStringAsFixed(0) : p.toStringAsFixed(2);
+  }
 
   @override
   Widget build(BuildContext context) {
     final product = widget.product;
 
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetails(product: product),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 6,
+            offset: const Offset(0, 4),
           ),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          border: Border.all(
-            color: const Color.fromARGB(128, 0, 0, 0),
-            width: 0.5,
-          ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              height: 100,
-              // width: double.infinity, DONT DO IT AGAIN
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(10),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Image area with overlays
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ProductDetails(product: product),
                 ),
-                image: DecorationImage(
-                  image: AssetImage(product.imageUrl),
-                  fit: BoxFit.cover,
-                ),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
               ),
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+              child: Stack(
                 children: [
-                  Text(
-                    product.name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  // Background image
+                  AspectRatio(
+                    aspectRatio: 1.1, // looks close to your mock
+                    child: Image.asset(product.imageUrl, fit: BoxFit.cover),
+                  ),
+
+                  // Gradient for legibility
+                  Positioned.fill(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.black.withOpacity(0.10),
+                            Colors.black.withOpacity(0.40),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          "Ghc${product.price}",
+
+                  // Name + price (overlay)
+                  Positioned(
+                    left: 12,
+                    bottom: 12,
+                    right: 12,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.name,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                            color: WHITE,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            height: 1.05,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: BLUE.shade400,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 5,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Center(
-                                    child: Text('Item added to cart'),
-                                  ),
-                                  duration: Duration(seconds: 2),
-                                  backgroundColor: BLACK,
-                                ),
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.add_shopping_cart,
-                              color: WHITE,
-                            ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'GHC ${_formatPrice(product.price)}',
+                          style: const TextStyle(
+                            color: WHITE,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
+
+                  // // Optional promo badge (show if product has discount field)
+                  // if ((product.discount ?? 0) > 0)
+                  //   Positioned(
+                  //     left: 10,
+                  //     top: 10,
+                  //     child: Container(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  //       decoration: BoxDecoration(
+                  //         color: Colors.orange.shade600,
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //       child: Text(
+                  //         '${product.discount!.toStringAsFixed(0)}% Off',
+                  //         style: const TextStyle(
+                  //           color: WHITE,
+                  //           fontSize: 11,
+                  //           fontWeight: FontWeight.w700,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+
+          // const SizedBox(height: 10),
+          Spacer(),
+
+          // Add to Cart button (under image)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+            child: SizedBox(
+              height: 42,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Item added to cart'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Colors.green, // use your custom GREEN if available
+                  foregroundColor: WHITE,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  'Add to Cart',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -5,8 +5,10 @@ import 'package:aglow_farms/utils/thank_you_page.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
+import '../../order/view/order_tracking.dart';
+
 class Checkout extends StatefulWidget {
-  const Checkout({super.key});
+  const Checkout({super.key, required double total});
 
   @override
   State<Checkout> createState() => _CheckoutState();
@@ -76,113 +78,6 @@ class _CheckoutState extends State<Checkout> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Shipping Address",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Enter Delivery Address",
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: isChecked ? BLUE : Colors.grey.shade400,
-                            width: 2,
-                          ),
-                        ),
-                        child: Checkbox(
-                          value: isChecked,
-                          onChanged: (value) {
-                            setState(() {
-                              isChecked = value!;
-                            });
-                          },
-                          shape: const CircleBorder(),
-                          activeColor: BLUE,
-                          checkColor: Colors.white,
-                          side: BorderSide.none,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                        ),
-                      ),
-                      const Text(
-                        "Home",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.edit, size: 30),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return EditAddressBottomSheet(
-                                nameController: nameController,
-                                addressController: addressController,
-                                phoneController: phoneController,
-                                onSave: () {
-                                  setState(() {});
-                                  Navigator.pop(context);
-                                },
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    nameController.text,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    addressController.text,
-                    style: const TextStyle(fontSize: 14, color: Colors.black),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    phoneController.text,
-                    style: const TextStyle(fontSize: 14, color: Colors.black),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
             PaymentMethodSelector(
               initialMethod: PaymentMethod.creditCard,
               onChanged: (method) {},
@@ -251,8 +146,11 @@ class _CheckoutState extends State<Checkout> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ThankYou()),
+                    MaterialPageRoute(
+                      builder: (_) => const OrderTrackingPage(),
+                    ),
                   );
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       backgroundColor: Colors.black,

@@ -1,8 +1,9 @@
-import 'package:aglow_farms/features/auth/login/view/login.dart';
-import 'package:aglow_farms/utils/bottom_nav.dart';
 import 'package:aglow_farms/utils/colors.dart';
 import 'package:aglow_farms/utils/navigator.dart';
 import 'package:flutter/material.dart';
+import '../../../../utils/custom_textfiled.dart';
+import '../../login/view/login.dart';
+import '../../login/view/widgets /auth_shell.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -12,171 +13,94 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  bool isChecked = false;
+  final _formKey = GlobalKey<FormState>();
+  final _nameCtrl = TextEditingController();
+  final _phoneCtrl = TextEditingController();
+  final _bizCtrl = TextEditingController();
+  final _pwdCtrl = TextEditingController();
+  bool _obscure = true;
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _phoneCtrl.dispose();
+    _bizCtrl.dispose();
+    _pwdCtrl.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              Center(
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset("assets/logo.png", fit: BoxFit.cover),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                "Create Account",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-              ),
-              Text(
-                "Fill your innformation below or register\nwith your socials",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  color: BLACK,
-                ),
-              ),
-              SizedBox(height: 40),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    hintText: 'Full Name',
-                    prefixIcon: Icon(Icons.person_2_outlined),
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    hintText: 'Email',
-                    prefixIcon: Icon(Icons.email_outlined),
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    hintText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outline),
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.remove_red_eye_outlined),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.only(right: 0.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                      activeColor: BLUE,
-                    ),
-                    const Text(
-                      "Agree with Terms & Condition",
-                      style: TextStyle(
-                        color: BLUE,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+    return AuthShell(
+      title: 'Join Aglow Farms',
+      subtitle: 'Sign up to manage your farm product orders with ease.',
+      form: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            CustomTextField(
+              label: 'Full Name',
+              hint: 'John Doe',
+              controller: _nameCtrl,
+              textInputAction: TextInputAction.next,
+              prefixIcon: const Icon(Icons.person_outline),
+              validator: (v) => (v == null || v.trim().isEmpty)
+                  ? 'Enter your full name'
+                  : null,
+            ),
+            const SizedBox(height: 16),
 
-              SizedBox(height: 10),
-              GestureDetector(
-                onTap: () {
-                  customNavigator(context, BottomNav());
-                },
-                child: Container(
-                  height: 50,
-                  width: 400,
-                  decoration: BoxDecoration(
-                    color: BLUE,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: WHITE,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login()),
-                  );
-                },
-                child: RichText(
-                  text: TextSpan(
-                    text: "Already have an account? ",
-                    style: TextStyle(color: Colors.black, fontSize: 15),
-                    children: [
-                      TextSpan(
-                        text: 'SignIn',
-                        style: TextStyle(
-                          color: BLUE,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-            ],
-          ),
+            CustomTextField(
+              label: 'Phone Number',
+              hint: '+233 20 000 0000',
+              controller: _phoneCtrl,
+              keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
+              prefixIcon: const Icon(Icons.phone_outlined),
+              validator: (v) =>
+                  (v == null || v.trim().isEmpty) ? 'Enter phone number' : null,
+            ),
+            const SizedBox(height: 16),
+
+            CustomTextField(
+              label: 'Business Name ',
+              hint: 'Aglow Supply Co.',
+              controller: _bizCtrl,
+              textInputAction: TextInputAction.next,
+              prefixIcon: const Icon(Icons.store_mall_directory_outlined),
+            ),
+            const SizedBox(height: 16),
+
+            CustomPasswordField(
+              label: 'Password',
+              controller: _pwdCtrl,
+              textInputAction: TextInputAction.done,
+              validator: (v) =>
+                  (v == null || v.length < 6) ? 'Min 6 characters' : null,
+            ),
+          ],
         ),
+      ),
+      primaryLabel: 'Sign Up',
+      onPrimaryPressed: () {
+        if (_formKey.currentState?.validate() ?? false) {
+          // TODO: call signup, then go to dashboard or OTP, etc.
+          Navigator.pop(context); // go back or push next
+        }
+      },
+      footer: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          const Text('Already have an account? '),
+          InkWell(
+            onTap: () => customNavigator(context, const Login()),
+            child: Text(
+              'Log in',
+              style: TextStyle(color: BLUE, fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
       ),
     );
   }

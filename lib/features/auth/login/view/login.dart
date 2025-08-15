@@ -1,9 +1,12 @@
 import 'package:aglow_farms/features/auth/signup/view/signup.dart';
+
 import 'package:aglow_farms/utils/bottom_nav.dart';
+import 'package:aglow_farms/utils/colors.dart';
+import 'package:aglow_farms/utils/custom_textfiled.dart';
 import 'package:aglow_farms/utils/navigator.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/colors.dart';
+import 'widgets /auth_shell.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -13,136 +16,82 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailCtrl = TextEditingController();
+  final _pwdCtrl = TextEditingController();
+  bool _obscure = true;
+
+  @override
+  void dispose() {
+    _emailCtrl.dispose();
+    _pwdCtrl.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              Center(
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset('assets/logo.png', fit: BoxFit.cover),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                "Sign In",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-              ),
-              Text(
-                "Hi! welcome back, you've been missed",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w200),
-              ),
-              SizedBox(height: 80),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    hintText: 'Email or Username',
-                    prefixIcon: Icon(Icons.email_outlined),
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    hintText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outline),
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.remove_red_eye_outlined),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                        color: BLUE,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30),
-              GestureDetector(
-                onTap: () {
-                  customNavigator(context, BottomNav());
+    return AuthShell(
+      title: 'Welcome back',
+      subtitle: "Sign in to manage your farm product orders with ease.",
+      form: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            // Email or Username
+            CustomTextField(
+              label: 'Email or Username',
+              hint: 'you@example.com',
+              controller: _emailCtrl,
+              validator: (v) => (v == null || v.trim().isEmpty)
+                  ? 'Enter your email or username'
+                  : null,
+              textInputAction: TextInputAction.next,
+              prefixIcon: Icon(Icons.email_outlined),
+            ),
+            const SizedBox(height: 16),
+            // Password
+            CustomPasswordField(
+              label: 'Password',
+              controller: _pwdCtrl,
+              textInputAction: TextInputAction.done,
+              validator: (v) =>
+                  (v == null || v.length < 6) ? 'Min 6 characters' : null,
+            ),
+            const SizedBox(height: 8),
+            // Forgot password
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                style: TextButton.styleFrom(foregroundColor: BLUE),
+                onPressed: () {
+                  // TODO: navigate to Forgot Password
                 },
-                child: Container(
-                  height: 50,
-
-                  decoration: BoxDecoration(
-                    color: BLUE,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: WHITE,
-                      ),
-                    ),
-                  ),
-                ),
+                child: const Text('Forgot password?'),
               ),
-              SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {
-                  customNavigator(context, Register());
-                },
-                child: RichText(
-                  text: TextSpan(
-                    text: "Don't have an account? ",
-                    style: TextStyle(color: Colors.black, fontSize: 15),
-                    children: [
-                      TextSpan(
-                        text: 'SignUp',
-                        style: TextStyle(
-                          color: BLUE,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
+      primaryLabel: 'Log In',
+      onPrimaryPressed: () {
+        if (_formKey.currentState?.validate() ?? false) {
+          // TODO: hook up real auth
+          customNavigator(context, const BottomNav());
+        }
+      },
+      footer: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          const Text("Don't have an account? "),
+          InkWell(
+            onTap: () => customNavigator(context, const Register()),
+            child: Text(
+              'Sign up',
+              style: TextStyle(color: BLUE, fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:aglow_farms/features/cart/view/widgets/cart_details.dart';
+import 'package:aglow_farms/features/cart/view/cart.dart';
 import 'package:aglow_farms/features/home/view/home_page.dart';
 import 'package:aglow_farms/features/profile/view/profile_page.dart';
 import 'package:aglow_farms/features/services/view/widgets/alert_page.dart';
@@ -19,7 +19,7 @@ class _BottomNavState extends State<BottomNav> {
     const HomePage(),
     const AlertPage(),
     const CartPage(),
-    const ProfilePage(),
+
     const Support(),
   ];
   int currentIndex = 0;
@@ -53,11 +53,7 @@ class _BottomNavState extends State<BottomNav> {
             icon: Icon(IconlyBroken.bag),
             label: 'Cart',
           ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(IconlyBold.profile),
-            icon: Icon(IconlyBroken.profile),
-            label: 'Profile',
-          ),
+
           BottomNavigationBarItem(
             activeIcon: Icon(IconlyBold.call),
             icon: Icon(IconlyBroken.call),

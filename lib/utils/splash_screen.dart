@@ -23,7 +23,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
   }
 
   Future<void> _goNext() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 10));
 
     if (!mounted || _navigated) return;
     _navigated = true;
@@ -42,7 +42,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
       body: Stack(
         children: [
           SizedBox.expand(
-            child: Image.asset('assets/bg.jpg', fit: BoxFit.cover),
+            child: Image.asset('assets/bg.jpg', fit: BoxFit.cover, gaplessPlayback: true,),
           ),
 
           // Positioned(

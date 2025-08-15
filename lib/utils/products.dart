@@ -2,26 +2,26 @@ import 'package:aglow_farms/features/home/model/product.dart';
 
 List<Product> products = [
   Product(
-    quantity: '4',
-    price: 60.00,
+    id: 'eggs_crate',
+    name: 'Farm Fresh Eggs (Crate)',
+    description: 'Fresh eggs from local farm.',
+    price: 60.0,
     imageUrl: 'assets/egg.png',
-    name: 'chicken eggs',
-    description: '60ghc for a crate',
+    discount: 10,
   ),
-
   Product(
-    quantity: '4',
+    id: "dev_feed",
     price: 29.99,
     imageUrl: 'assets/feed.png',
     name: 'Developer Feed',
     description: 'Chicken feeds for your farm',
   ),
   Product(
-    quantity: '4',
-    price: 19.99,
-    imageUrl: 'assets/pro-chic.jpg',
+    id: 'broiler_bird',
     name: 'Processed full chicken',
     description:
         'Freshly processed chicken, ready for cooking and consumption.',
+    price: 150.0,
+    imageUrl: 'assets/feed.png',
   ),
 ];

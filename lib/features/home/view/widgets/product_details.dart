@@ -1,4 +1,4 @@
-import 'package:aglow_farms/features/cart/view/cart.dart';
+import 'package:aglow_farms/features/cart/view/widgets/cart_details.dart';
 import 'package:aglow_farms/features/home/model/product.dart';
 import 'package:aglow_farms/features/home/view/widgets/specifications.dart';
 import 'package:aglow_farms/utils/colors.dart';

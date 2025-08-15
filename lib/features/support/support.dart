@@ -11,34 +11,23 @@ class Support extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: WHITE,
-      appBar: AppBar(
-        title: const Text('Support'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton.filledTonal(
-              icon: const Icon(IconlyBroken.call),
-              onPressed: () {},
-            ),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text('Support')),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
               const SizedBox(height: 20),
+
+              // CALL US CARD
               Container(
-                height: 250,
-                width: double.infinity,
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.grey, width: 1),
                 ),
                 child: Column(
                   children: [
-                    const SizedBox(height: 20),
                     Container(
                       height: 70,
                       width: 70,
@@ -46,11 +35,11 @@ class Support extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: BLUE.withOpacity(0.3),
                       ),
-                      child: Icon((Icons.call), size: 40, color: BLUE),
+                      child: Icon(Icons.call, size: 40, color: BLUE),
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      'Call US',
+                      'Call Us',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -61,22 +50,33 @@ class Support extends StatelessWidget {
                       '+233 594-191-836',
                       style: TextStyle(fontSize: 16),
                     ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Speak directly to our support team for urgent assistance or inquiries about your orders.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                    ),
                     const SizedBox(height: 15),
-                    Container(
-                      width: 300,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: BLUE,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Call Now',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: WHITE,
+                    GestureDetector(
+                      onTap: () {
+                        // TODO: implement call functionality
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: BLUE,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Call Now',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: WHITE,
+                            ),
                           ),
                         ),
                       ),
@@ -84,25 +84,26 @@ class Support extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 20),
+
+              // WHATSAPP CARD
               Container(
-                height: 250,
-                width: double.infinity,
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.grey, width: 1),
                 ),
                 child: Column(
                   children: [
-                    const SizedBox(height: 20),
                     Container(
                       height: 70,
                       width: 70,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: BLUE.withOpacity(0.3),
+                        color: GREEN.withOpacity(0.3),
                       ),
-                      child: Icon((Icons.chat_sharp), size: 40, color: BLUE),
+                      child: Icon(Icons.chat_sharp, size: 40, color: GREEN),
                     ),
                     const SizedBox(height: 10),
                     const Text(
@@ -117,22 +118,33 @@ class Support extends StatelessWidget {
                       'Connect with us instantly on WhatsApp.',
                       style: TextStyle(fontSize: 16),
                     ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Send us a message anytime for quick responses, order updates, or general support.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                    ),
                     const SizedBox(height: 15),
-                    Container(
-                      width: 300,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: BLUE,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Chat Now',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: WHITE,
+                    GestureDetector(
+                      onTap: () {
+                        // TODO: implement WhatsApp chat functionality
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: BLUE,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Chat Now',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: WHITE,
+                            ),
                           ),
                         ),
                       ),
@@ -140,6 +152,7 @@ class Support extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 20),
             ],
           ),
