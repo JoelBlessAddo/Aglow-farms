@@ -1,6 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:aglow_farms/features/cart/order/view/widgets/order_summary.dart';
+import 'package:aglow_farms/features/cart/view/cart.dart';
+import 'package:aglow_farms/features/cart/view/widgets/cart_details.dart';
+import 'package:aglow_farms/features/profile/view/profile_page.dart';
+import 'package:aglow_farms/utils/bottom_nav.dart';
+import 'package:aglow_farms/utils/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:aglow_farms/utils/colors.dart';
 import 'bm_sheet.dart';
@@ -132,13 +137,24 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
         centerTitle: true,
         backgroundColor: WHITE,
         elevation: 0.5,
+        leading: GestureDetector(
+          onTap: () {
+            customNavigator(context, BottomNav());
+          },
+          child: Icon(Icons.arrow_back_ios, size: 16, color: BLACK),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 12.0),
-            child: CircleAvatar(
-              radius: 14,
-              backgroundColor: BLUE.withOpacity(0.12),
-              child: Icon(Icons.person, size: 16, color: BLUE),
+            child: GestureDetector(
+              onTap: () {
+                customNavigator(context, ProfileManagementPage());
+              },
+              child: CircleAvatar(
+                radius: 14,
+                backgroundColor: BLUE.withOpacity(0.12),
+                child: Icon(Icons.person, size: 16, color: BLUE),
+              ),
             ),
           ),
         ],

@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:aglow_farms/utils/bottom_nav.dart';
+import 'package:aglow_farms/utils/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:aglow_farms/utils/colors.dart';
@@ -43,20 +45,18 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
         centerTitle: true,
         backgroundColor: WHITE,
         elevation: 0.5,
+        leading: IconButton.filledTonal(
+          icon: const Icon(IconlyBroken.arrow_left_2),
+          onPressed: () {
+            customNavigator(context, BottomNav());
+          },
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton.filledTonal(
               icon: const Icon(IconlyBroken.notification),
               onPressed: () {},
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: CircleAvatar(
-              radius: 14,
-              backgroundColor: BLUE.withOpacity(0.12),
-              child: Icon(Icons.person, size: 16, color: BLUE),
             ),
           ),
         ],
@@ -103,8 +103,10 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Preferred Order Type',
-                      style: TextStyle(fontWeight: FontWeight.w600)),
+                  const Text(
+                    'Preferred Order Type',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                   const SizedBox(height: 10),
                   ProfileRadioGroup<OrderType>(
                     value: _orderType,
@@ -126,8 +128,10 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Default Payment Method',
-                      style: TextStyle(fontWeight: FontWeight.w600)),
+                  const Text(
+                    'Default Payment Method',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                   const SizedBox(height: 10),
                   ProfileRadioGroup<DefaultPaymentMethod>(
                     value: _payment,
@@ -191,5 +195,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
 
 // Local enums for this page (kept simple & scoped)
 enum BusinessType { retailer, restaurant, wholesaler, individual }
+
 enum OrderType { pickup, delivery }
+
 enum DefaultPaymentMethod { cashOnDelivery, mobileMoney, bankTransfer }
